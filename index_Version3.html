@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gorilli Games - Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Gorilli Games Logo" class="logo">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#games">Playable Games</a>
+      <a href="#assets">Game Assets</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about" class="card">
+      <h1>About Me</h1>
+      <p>
+        Hi, I'm a Unity game developer at <strong>Gorilli Games</strong>. I create unique WebGL games and digital assets.
+        Explore my work below!
+      </p>
+    </section>
+
+    <section id="games" class="card">
+      <h2>Playable Games</h2>
+      <div class="games-grid" id="games-list">
+        <!-- Example modular item -->
+        <div class="game-item">
+          <h3>Game Title 1</h3>
+          <iframe src="https://your-webgl-game-link.com" title="Game 1" frameborder="0" allowfullscreen></iframe>
+          <p>Short description of the game. Replace this with your game's details.</p>
+        </div>
+        <div class="game-item">
+          <h3>Game Title 2</h3>
+          <iframe src="https://your-webgl-game-link.com" title="Game 2" frameborder="0" allowfullscreen></iframe>
+          <p>Another game. Add or remove sections easily!</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="assets" class="card">
+      <h2>Game Assets</h2>
+      <div class="assets-grid" id="assets-list">
+        <div class="asset-item">
+          <img src="https://via.placeholder.com/300x200?text=Asset+Image" alt="Game Asset 1">
+          <p>Asset 1 - Replace with your image or video.</p>
+        </div>
+        <div class="asset-item">
+          <video controls width="300">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p>Asset Video - Replace with your own asset video.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Gorilli Games. All rights reserved.
+  </footer>
+</body>
+</html>
