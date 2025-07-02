@@ -12,7 +12,6 @@
     <nav>
       <a href="#about">About</a>
       <a href="#games">Playable Games</a>
-      <!-- New Nav Links Added Here -->
       <a href="#vr-kiosk">VR/Kiosk</a>
       <a href="#pc-games">PC Games</a>
       <a href="#assets">Game Assets</a>
@@ -61,19 +60,22 @@
   <div class="assets-grid">
     <div class="asset-item">
       <h3>VR Project Title</h3>
-      <iframe width="300" height="200" src="https://youtu.be/R0SmPE_PUdM" frameborder="0" allowfullscreen></iframe>
+      <!-- This YouTube embed needs to be responsive too -->
+      <iframe src="https://www.youtube.com/embed/R0SmPE_PUdM" style="width:100%; aspect-ratio: 16/9; border:0;" allowfullscreen></iframe>
       <p>Kilitbahir Stronghold VR tour</p>
     </div>
     <div class="asset-item">
       <h3>ÇSAM KIOSK 1</h3>
+      <!-- FIXED: Removed fixed width/height and made responsive -->
       <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6973711734532390912?compact=1"
-        height="399" width="504" frameborder="0" allowfullscreen="" title="Gömülü gönderi"></iframe>
+        style="width: 100%; min-height: 450px; border: 0;" allowfullscreen="" title="Gömülü gönderi"></iframe>
       <p>War History Research Center, Dardanelles, Gallipoli, First World War, Ottoman to Turkish Translator / screenshot mailing</p>
     </div>
     <div class="asset-item">
       <h3>ÇSAM KIOSK 2</h3>
-      <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6973710806240636928?compact=1" height="399"
-        width="504" frameborder="0" allowfullscreen="" title="Gömülü gönderi"></iframe>
+      <!-- FIXED: Removed fixed width/height and made responsive -->
+      <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6973710806240636928?compact=1" 
+        style="width: 100%; min-height: 450px; border: 0;" allowfullscreen="" title="Gömülü gönderi"></iframe>
       <p>War History Research Center, Dardanelles, Gallipoli, First World War, map database / inspection</p>
     </div>
   </div>
