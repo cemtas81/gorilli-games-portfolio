@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
+    <title>Jigsaw Puzzle</title>
+    <!--
+      Portfolio template: the game plays inside a fixed 9:16 portrait window, centred and letterboxed in whatever
+      space it gets (the portfolio iframe, or a whole tab when opened directly). The build only starts downloading
+      when the visitor presses Play, so several demos on one page do not all load (and play audio) at once.
+    -->
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0b0d12; }
+      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #e9f6ff; }
+      #game-window { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); overflow: hidden;
+                     border-radius: 10px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 8px 30px rgba(0, 0, 0, .5); }
+      #unity-canvas { display: block; width: 100%; height: 100%; background: #231F20; outline: none; }
+      .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+                 justify-content: center; gap: 14px; text-align: center; padding: 16px; box-sizing: border-box; }
+      #play-button { font-family: inherit; font-weight: 600; font-size: 1.05rem; line-height: 1; color: #0b0d12; background: #19fff2; border: 0; border-radius: 999px;
+                     padding: 14px 28px; white-space: nowrap; cursor: pointer; box-shadow: 0 0 24px rgba(25, 255, 242, .35); }
+      #play-button:hover { filter: brightness(1.08); }
+      #play-button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+      .title { font-weight: 700; font-size: 1.15rem; letter-spacing: .02em; }
+      .hint { font-size: .8rem; opacity: .65; max-width: 260px; }
+      #loading { display: none; }
+      .bar { width: min(240px, 70%); height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+      .bar > div { width: 0%; height: 100%; background: #19fff2; transition: width .15s; }
+      #error { display: none; color: #ffb4b4; font-size: .85rem; }
+    </style>
+  </head>
+  <body>
+    <div id="game-window">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+
+    <div id="start" class="overlay">
+      <div class="title">Jigsaw Puzzle</div>
+      <button id="play-button" type="button">&#9654;&nbsp; Play demo</button>
+      <div class="hint">Short web demo &middot; mouse or touch</div>
+    </div>
+
+    <div id="loading" class="overlay" aria-live="polite">
+      <div class="title">Jigsaw Puzzle</div>
+      <div class="bar"><div id="progress"></div></div>
+      <div class="hint" id="loading-text">Loading&hellip;</div>
+      <div id="error"></div>
+    </div>
+    </div>
+
+    <script>
+      var buildUrl = "Build";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/JigsawPuzzle.data.unityweb",
+        frameworkUrl: buildUrl + "/JigsawPuzzle.framework.js.unityweb",
+        codeUrl: buildUrl + "/JigsawPuzzle.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "BleisInteractive",
+        productName: "JigsawPuzzle2d",
+        productVersion: "1.2.0",
+        // Cap the render resolution on very dense screens: a portfolio demo should stay smooth.
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        showBanner: function (msg, type) {
+          if (type === "error") showError(msg); else console.warn(msg);
+        }
+      };
+
+      // Keep the game in a portrait 9:16 window that fits the available space (never stretched).
+      var ASPECT = 9 / 19.5;   // Jigsaw layout is made for tall phones
+      var gameWindow = document.getElementById("game-window");
+      function fitWindow() {
+        var W = window.innerWidth, H = window.innerHeight;
+        var w = Math.min(W, Math.round(H * ASPECT));
+        var h = Math.round(w / ASPECT);
+        if (h > H) { h = H; w = Math.round(h * ASPECT); }
+        gameWindow.style.width = w + "px";
+        gameWindow.style.height = h + "px";
+      }
+      window.addEventListener("resize", fitWindow);
+      fitWindow();
+
+      var canvas = document.getElementById("unity-canvas");
+      var startEl = document.getElementById("start");
+      var loadingEl = document.getElementById("loading");
+      var progressEl = document.getElementById("progress");
+      var errorEl = document.getElementById("error");
+      var started = false;
+
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.style.display = "block";
+        document.getElementById("loading-text").style.display = "none";
+        loadingEl.style.display = "flex";
+      }
+
+      function start() {
+        if (started) return;
+        started = true;
+        startEl.style.display = "none";
+        loadingEl.style.display = "flex";
+        var script = document.createElement("script");
+        script.src = buildUrl + "/JigsawPuzzle.loader.js";
+        script.onload = function () {
+          createUnityInstance(canvas, config, function (p) {
+            progressEl.style.width = Math.round(p * 100) + "%";
+          }).then(function () {
+            loadingEl.style.display = "none";
+            canvas.focus();
+          }).catch(function (message) {
+            showError(String(message));
+          });
+        };
+        script.onerror = function () { showError("Could not load the game files."); };
+        document.body.appendChild(script);
+      }
+
+      document.getElementById("play-button").addEventListener("click", start);
+    </script>
+  </body>
+</html>

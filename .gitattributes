@@ -1,0 +1,8 @@
+# Unity WebGL build output: never convert line endings in compressed / binary build files
+*.unityweb binary
+*.wasm binary
+*.data binary
+*.bundle binary
+*.bin binary
+*.br binary
+*.gz binary
